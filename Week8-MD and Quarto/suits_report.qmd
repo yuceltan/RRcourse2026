@@ -1,0 +1,64 @@
+---
+title: "Suits Viewership Analysis"
+author: "Yücel Tan Ebiri"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Introduction
+
+*Suits* is an American legal drama television series that premiered in 2011.
+
+The show follows talented lawyer Harvey Specter and Mike Ross, a brilliant college dropout with exceptional memory skills.
+
+# Data
+
+```{r}
+library(ggplot2)
+
+season <- c(1,2,3,4,5,6,7,8,9)
+viewers <- c(4.6,4.2,3.7,3.5,3.0,2.5,2.0,1.5,1.0)
+
+tv_data <- data.frame(season, viewers)
+tv_data$change <- c(NA, diff(tv_data$viewers))
+```
+
+# Summary Statistics
+
+```{r}
+summary(tv_data$viewers)
+```
+
+```{r}
+ggplot(tv_data, aes(x = season, y = viewers)) +
+  geom_line() +
+  geom_point(size = 3) +
+  labs(
+    title = "Suits Viewership by Season",
+    x = "Season",
+    y = "Average Viewers (millions)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(tv_data[-1, ], aes(x = season, y = change)) +
+  geom_col() +
+  labs(
+    title = "Season-to-Season Change in Viewership",
+    x = "Season",
+    y = "Change in Viewers"
+  ) +
+  theme_minimal()
+```
+
+# Interpretation
+
+The audience for *Suits* gradually decreased over time.
+
+The show had its highest average audience in Season 1 with around 4.6 million viewers and its lowest audience in Season 9 with around 1 million viewers.
+
+The biggest drop happened after Season 7.
